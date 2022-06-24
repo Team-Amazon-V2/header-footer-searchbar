@@ -1,4 +1,5 @@
 import React from "react";
+import Navbar from "./components/Navbar";
 import SearchIcon from "@mui/icons-material/Search";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
@@ -51,6 +52,7 @@ function Header() {
           </div>
         </div>
       </div>
+      <Navbar />
     </div>
   );
 }
