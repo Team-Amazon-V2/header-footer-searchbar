@@ -1,10 +1,26 @@
-import React from "react";
-import Navbar from "./components/Navbar";
+import React, { useState } from "react";
+import Navbar from "./Navbar";
 import SearchIcon from "@mui/icons-material/Search";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
 
 function Header() {
+  const [input, setInput] = useState("");
+  const [searchItem, setSearchItem] = useState([]);
+
+  const handleInput = (e) => {
+    let userInput = e.target.value;
+    setInput(userInput);
+  };
+
+  const handleSearch = () => {
+    fetch("http://localhost:3012/items")
+      .then((res) => res.json())
+      .then((data) => data.map((item) => setSearchItem([...searchItem, item])))
+      .catch((error) => console.log(error));
+    console.log(searchItem);
+  };
+
   return (
     <div className="header_navbar">
       <div className="header">
@@ -30,8 +46,13 @@ function Header() {
             <option value="Computers">Computers</option>
             <option value="Electronics">Electronics</option>
           </select>
-          <input className="header_searchInput" type="text" />
-          <SearchIcon className="header_searchIcon" />
+          <input
+            className="header_searchInput"
+            type="text"
+            onChange={handleInput}
+            value={input}
+          />
+          <SearchIcon onClick={handleSearch} className="header_searchIcon" />
         </div>
         <div className="header_nav">
           <div className="header_option">
@@ -53,6 +74,7 @@ function Header() {
         </div>
       </div>
       <Navbar />
+      <div>{input}</div>
     </div>
   );
 }
