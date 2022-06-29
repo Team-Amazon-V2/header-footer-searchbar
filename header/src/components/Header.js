@@ -1,24 +1,23 @@
 import React, { useState } from "react";
 import Navbar from "./Navbar";
-import SearchIcon from "@mui/icons-material/Search";
+import Search from "./Search";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
 
-function Header() {
+function Header(props) {
   const [input, setInput] = useState("");
-  const [searchItem, setSearchItem] = useState([]);
+  const [itemData, setItemData] = useState([]);
 
   const handleInput = (e) => {
-    let userInput = e.target.value;
-    setInput(userInput);
+    setInput(e.target.value);
   };
 
   const handleSearch = () => {
-    fetch("http://localhost:3012/items")
+    // console.log("working");
+    fetch(`http://localhost:3512/amazon/${input}`)
       .then((res) => res.json())
-      .then((data) => data.map((item) => setSearchItem([...searchItem, item])))
+      .then((data) => data.map((item) => setItemData([...itemData, item])))
       .catch((error) => console.log(error));
-    console.log(searchItem);
   };
 
   return (
@@ -27,6 +26,7 @@ function Header() {
         <img
           className="header_logo"
           src="http://pngimg.com/uploads/amazon/amazon_PNG11.png"
+          alt="header_logo"
         />
         <div className="header_locator">
           <LocationOnOutlinedIcon className="header_locatorImage" />
@@ -52,7 +52,7 @@ function Header() {
             onChange={handleInput}
             value={input}
           />
-          <SearchIcon onClick={handleSearch} className="header_searchIcon" />
+          <Search handleSearch={handleSearch} />
         </div>
         <div className="header_nav">
           <div className="header_option">
@@ -74,7 +74,7 @@ function Header() {
         </div>
       </div>
       <Navbar />
-      <div>{input}</div>
+      {/* <div>{searchItem}</div> */}
     </div>
   );
 }
