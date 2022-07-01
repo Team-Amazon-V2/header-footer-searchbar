@@ -6,7 +6,7 @@ const app = express();
 app.use(express.json());
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    origin: "http://localhost:3012" || "http://localhost:3000",
     methods: ["GET"],
   })
 );
@@ -26,7 +26,7 @@ app.get("/amazon/:item", async (req, res) => {
   const { item } = req.params;
   try {
     const data = await pool.query(
-      `SELECT * FROM items WHERE name = '${item}';`
+      `SELECT * FROM items WHERE name ~* '${item}';`
     );
     console.log(data.rows);
     res.json(data.rows);

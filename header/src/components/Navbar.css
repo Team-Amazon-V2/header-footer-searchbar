@@ -3,7 +3,7 @@
 }
 
 .navbar {
-    width: 100vw;
+    width: inherit;
     height: 40px;
     background-color: #22303E;
     color: white;
